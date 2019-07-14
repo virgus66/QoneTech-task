@@ -1,0 +1,66 @@
+body {
+  
+}
+
+table {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+table tbody > tr {
+  border: 1px solid lightgrey
+}
+
+table td {
+  position: relative;
+  text-align: center;
+  padding: 5px;
+}
+
+thead th {
+  text-align: center;
+  min-width: 120px;
+  padding: 10px;
+}
+
+input[type='text'] {
+  outline: none;
+  border: none;
+  padding: 5px;
+}
+
+input::placeholder {
+  color: lightgrey
+}
+
+input#taskName {
+  border-bottom: 1px solid black;
+}
+
+input#taskName:focus {
+  border-bottom: 1px solid red;
+}
+
+button {
+  width: 80px;
+}
+
+.have-digit {
+  background-color: rgb(255, 182, 182);
+}
+
+.duplicate:after {
+  content: '(2)';
+  position: absolute;
+  top: 2px;
+  right: -85px;
+}
+
+tfoot tr {
+  border-top: 1px solid lightgrey;
+}
+
+tfoot tr td {
+  padding-top: 40px;
+}
