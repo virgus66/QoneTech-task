@@ -1,0 +1,40 @@
+Tasks:
+
+1. Restore the SQL dump and open the test project (Netbeans was used to create it but you can use whatever IDE you like)
+2. Diagnose why add/edit/delete does not work and explain the fix
+3. Identify any security weaknesses of this design.
+4. Implement an “are you sure” box for the delete button. Extra credit for an HTML “are you sure box” as opposed to a JavaScript one
+5. Change the code so that any task with numbers is displayed with a red background, both immediately when changed and when the page is refreshed.
+6. Change the code so that task names cannot be added
+7. Change the code so that task names cannot be blanked
+8. Change the code so that the add task name box is blanked after a user is added
+9. Change the code so that duplicate task names cannot be added, rather a number in brackets is added to the end of the duplicate such as Fix (2).
+10. Add a “Hours spent” column to the table. Any task with no recorded hours should still be displayed, but with 0 hours
+11. Use CSS to make the design more pretty, using any design you like
+12. What indexes would you add to the SQL tables and why?
+13. Create a single MySQL query to list all tasks with the maximum hours spent in task name order (Task Name, Max_Hours)
+14. Create a single MySQL query to list the task name along with the name of the user who has spent the most time on that task plus the average time that user spends on any task
+15. Table names use a mix of lower and upper case in this example. What changes to MySQL are needed to preserve these names when MySQL is running under Windows
+16. Create an Apache rewrite file so that a unique company ID can be added as part of the URL and passed as a GET variable to every page. Also, so that the .php extension is not required.
+17. How would you delete any task hours under 0.1 every hour under Linux/Apache/MySQL/PHP? Can you think of a way to automatically update the table in point 10 above so that the table automatically updates, for all users viewing the page, to reflect these changes without needing a refresh?
+18. No need to provide code, but how would you make this table responsive for mobile screens? Use of frameworks is allowed here. A brief answer is fine.
+19. Change the code so that the table from point 10 above can be ordered by task name or hours spent. Can you make it so that the ordering is preserved after a page refresh (i.e. stored in the DB)? Keep in mind that any server side code you add should be resistant to malicious users.
+20. Change the code so that the table rows can be drag/drop reordered (ideally using a jQuery JavaScript framework). Can you make it so that the new order is preserved (i.e. stored in the DB)? Keep in mind that any server side code you add should be resistant to malicious users.
+
+
+Answers (where applicable):
+
+3) The main weakness of that design is the keys to perfomr any action on the database are stored publicly in html elements. Eventhough they are hashed, making them publick is very bad practice. Also I've changed Mcrypt hashing function to Open_ssl. Mcrypt is depreciated since php 7.1 and not supported anymore, therefore not considered as secure. Doesn't work on servers with newest php version.
+6) I didn't really understand this task.
+12) tbl_Deletes should contain a foreign key of Task Id, otherwise we don't know what was deleted
+13) SELECT Name as Task_name, MAX(Hours_Spent) FROM TestDB.tbl_Tasks LEFT JOIN TestDB.tbl_Task_Hours ON PK_Task_ID=FK_Task_ID GROUP BY Name;
+14) SELECT Name as Task_name, MAX(Hours_Spent), User_Name FROM TestDB.tbl_Tasks LEFT JOIN TestDB.tbl_Task_Hours ON PK_Task_ID=FK_Task_ID GROUP BY Name;  (I'd need to do a little more reaserch on how to create and join multiple select statements)
+15) -
+17) you can use CRON task on Linux operating system, to run script performing the operation, for example php script. This task will look something like:  0 * * * * /var/www/deleteTasks.php
+18) using media queries itself or bootstrap (I've included it in index.php)
+19) -
+20) -
+
+
+Extra:
+Because of Apache rewriting rule, I needed to provide absolute path to resources (css, js), which is also a good practice. Although in ajaxupdate.js I've hardcoded project folder name /TestWebApp/. Path to the main app folder should be stored somewhere in config file.
